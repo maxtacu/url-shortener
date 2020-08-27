@@ -1,0 +1,4 @@
+namespace: shortener
+
+resources:
+- namespace.yaml

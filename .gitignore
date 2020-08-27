@@ -1,0 +1,11 @@
+*.tfstate
+*.tfstate.*
+**/.terraform/*
+
+testings/
+kubeconfig*
+.vscode/
+
+*.db
+**/__pycache__/*
+venv/
