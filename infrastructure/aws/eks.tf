@@ -6,10 +6,6 @@ data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_id
 }
 
-locals {
-  cluster_name = "eks-${var.project}"
-}
-
 module "eks" {
     source          = "terraform-aws-modules/eks/aws"
     cluster_name    = var.project
@@ -30,6 +26,6 @@ module "eks" {
         }
     ]
 
-    worker_additional_security_group_ids = [aws_security_group.home_access.id]
+    worker_additional_security_group_ids = [aws_security_group.home_access.id, aws_security_group.instance_alb.id]
 
 }
