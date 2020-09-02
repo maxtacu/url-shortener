@@ -36,3 +36,10 @@ variable "priv_cidr_block" {
 variable "region" {
   default = "eu-west-1"
 }
+
+variable "domain" {
+  type = string
+  default = "*.shortdemo.tk"
+
+  description = "Sphere root domain for staging and prod environment"
+}
