@@ -2,3 +2,6 @@ namespace: flask-shortener
 
 resources:
 - namespace.yaml
+- deployment.yaml
+- ingress.yaml
+- service.yaml
