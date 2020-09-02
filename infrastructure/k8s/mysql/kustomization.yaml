@@ -1,0 +1,6 @@
+namespace: mysql
+
+resources:
+- namespace.yaml
+- pv.yaml
+- deployment.yaml

@@ -1,4 +1,4 @@
-namespace: shortener
+namespace: flask-shortener
 
 resources:
 - namespace.yaml
