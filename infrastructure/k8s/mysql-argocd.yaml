@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mysql
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/maxtacu/url-shortener.git
+    targetRevision: HEAD
+    path: infrastructure/k8s/mysql
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mysql
