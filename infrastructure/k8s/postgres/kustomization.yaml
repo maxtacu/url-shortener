@@ -1,0 +1,8 @@
+namespace: postgres
+
+resources:
+- namespace.yaml
+- configmap.yaml
+- pv.yaml
+- deployment.yaml
+- service.yaml
