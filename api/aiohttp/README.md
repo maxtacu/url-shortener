@@ -3,7 +3,7 @@
 This example uses the [Connexion](https://github.com/zalando/connexion) library on top of aiohttp.
 
 ## Requirements
-Python 3.5.2+
+Python 3.8+
 
 ## Usage
 To run the server, please execute the following from the root directory:
