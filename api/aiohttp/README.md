@@ -1,8 +1,6 @@
-# OpenAPI generated server
-
 ## Overview
 
-This example uses the [Connexion](https://github.com/zalando/connexion) library on top of Flask.
+This example uses the [Connexion](https://github.com/zalando/connexion) library on top of aiohttp.
 
 ## Requirements
 Python 3.5.2+
@@ -12,7 +10,7 @@ To run the server, please execute the following from the root directory:
 
 ```
 pip3 install -r requirements.txt
-python3 -m openapi_server
+python3 -m api_server
 ```
 
 and open your browser to here:
@@ -29,7 +27,7 @@ http://localhost:8080/openapi.json
 
 ## Running with Docker
 
-To run the server on a Docker container, please execute the following from the root directory:
+To run the server on a Docker container, please execute the following from the aiohttp directory:
 
 ```bash
 # building the image

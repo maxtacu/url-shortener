@@ -12,8 +12,8 @@
 <body>
     <section class="section">
         <div class="container">
-            <form method="POST" action="/?test2">
-            <!-- <form method="POST" action="{{ url_for('..api_server_routes_create_shorturl', test='{{ original_url }}') }}"> -->
+            <form method="POST" action="/add">
+            <form method="POST" action="{{ url_for('htmlresponse.create_shorturl') }}">
                 <div class="field">
                     <label class="label">Original URL</label>
                     <div class="control">

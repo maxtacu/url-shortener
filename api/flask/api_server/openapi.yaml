@@ -37,13 +37,13 @@ paths:
               description: Expiration date-time
         '404':
           description: Not Found
-      operationId: api_server.routes.redirect_shorturl
+      operationId: api_server.apiroutes.redirect_shorturl
       description: Redirect to the long url which was added
-  /add:
+  /api/add:
     parameters: []
     post:
       summary: Add URL
-      operationId: api_server.routes.create_shorturl
+      operationId: api_server.apiroutes.create_shorturl
       responses:
         '200':
           description: OK
@@ -54,11 +54,10 @@ paths:
       parameters:
         - schema:
             type: string
-            format: uri
           in: query
           name: url
       description: Create your short link
-  /stats:
+  /api/stats:
     get:
       summary: All URL-shortener stats
       tags: []
@@ -71,9 +70,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Url'
-      operationId: api_server.routes.get_stats_all
+      operationId: api_server.apiroutes.get_stats_all
       description: Get stats on all existing links in database
-  '/stats/{shorturl}':
+    parameters: []
+  '/api/stats/{shorturl}':
     parameters:
       - schema:
           type: string
@@ -90,7 +90,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Url'
-      operationId: api_server.routes.get_stats_shorturl
+      operationId: api_server.apiroutes.get_stats_shorturl
       description: Get specific link stats
 components:
   schemas:

@@ -4,6 +4,7 @@ import connexion
 from sqlalchemy.exc import SQLAlchemyError
 from .extensions import db, ma
 from flask import render_template
+from .formroutes import htmlresponse
 
 import os
 
@@ -12,11 +13,10 @@ def main():
     connexion_app = connexion.App(__name__)
 
     connexion_app.app.config.from_pyfile('./config.py')
-
-    # if os.path.exists('./api_server/shortener.db'):
-    #     os.remove('./api_server/shortener.db')
-    
     connexion_app.add_api('./openapi.yaml', pythonic_params=True)
+    
+    connexion_app.app.register_blueprint(htmlresponse)
+
 
     try:
         db.init_app(connexion_app.app)
@@ -33,7 +33,6 @@ def main():
 
 
     connexion_app.run(port=8080)
-    # print(connexion_app.host)
     
 
 if __name__ == '__main__':

@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  contact:
+    name: Maxim Tacu
+  description: URL Shortener API service
+  title: url-shortener
+  version: "1.0"
+servers:
+- description: HTTP
+  url: http://localhost:8080
+paths:
+  /add:
+    post:
+      description: Create your short link
+      operationId: api_server.routes.create_shorturl
+      parameters:
+      - explode: true
+        in: query
+        name: url
+        required: false
+        schema:
+          format: uri
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Url'
+          description: OK
+      summary: Add URL
+  /stats:
+    get:
+      description: Get stats on all existing links in database
+      operationId: api_server.routes.get_stats_all
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Url'
+                type: array
+          description: OK
+      summary: All URL-shortener stats
+      tags: []
+  /stats/{shorturl}:
+    get:
+      description: Get specific link stats
+      operationId: api_server.routes.get_stats_shorturl
+      parameters:
+      - explode: false
+        in: path
+        name: shorturl
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Url'
+          description: OK
+      summary: Stats for a specific url
+      tags: []
+  /{shorturl}:
+    get:
+      description: Redirect to the long url which was added
+      operationId: api_server.routes.redirect_shorturl
+      parameters:
+      - explode: false
+        in: path
+        name: shorturl
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "301":
+          description: Moved Permanently
+          headers:
+            location:
+              description: Redirect location
+              explode: false
+              required: true
+              schema:
+                format: uri
+                type: string
+              style: simple
+            expires:
+              description: Expiration date-time
+              explode: false
+              required: true
+              schema:
+                format: date-time
+                type: string
+              style: simple
+        "404":
+          description: Not Found
+      summary: Redirect URL
+      tags: []
+components:
+  schemas:
+    Url:
+      example:
+        visits: 0
+        expires: expires
+        redirect-url: https://openapi-generator.tech
+        original-url: https://openapi-generator.tech
+      properties:
+        redirect-url:
+          description: Shortened URL
+          format: uri
+          type: string
+        original-url:
+          description: Original URL
+          format: uri
+          type: string
+        expires:
+          description: Expiration datetime
+          type: string
+        visits:
+          description: Unique visits of the shortened url
+          type: integer
+      title: URL data
+      type: object

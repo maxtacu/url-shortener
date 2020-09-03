@@ -1,19 +1,16 @@
 import connexion
 import datetime
 
-import asyncio
-
 from api_server.config import HOSTNAME
-from api_server.__main__ import db
+from .extensions import db
 from api_server.models.url import Url, UrlSchema
+from flask import render_template
+from .util import add_link
 
-loop = asyncio.get_event_loop()
-
-async def add_to_database(link):
-    db.session.add(link)
-    db.session.commit()
 
 def create_shorturl(url=None): 
+    if connexion.request.is_json:
+        url = connexion.request.get_json()['url']
     if url is None:
         return f'Missing url parameter', 400
     else:
@@ -22,19 +19,14 @@ def create_shorturl(url=None):
         schema = UrlSchema(exclude=("id",))
         # Do we already have this link?
         if existing_link is None:
-            link = Url(original_url=url)
-            loop.run_until_complete(add_to_database(link))
-
-            link.redirect_url = HOSTNAME + link.redirect_url
-
-            # Serialize and return the newly created link in the response
-            data = schema.dump(link)
-
-            return data, 201
+            response = add_link(url, schema)
+    
+            return response, 201
         else:
             existing_link.redirect_url = HOSTNAME + existing_link.redirect_url
-            data = schema.dump(existing_link)
-            return data, 409
+            response = schema.dump(existing_link)
+
+            return response, 409
 
 
 def get_stats_all(): 
