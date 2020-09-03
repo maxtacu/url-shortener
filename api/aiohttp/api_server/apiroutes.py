@@ -51,11 +51,14 @@ async def redirect_shorturl(request: web.Request, shorturl) -> web.Response:
 
     expiration = datetime.datetime.now() + datetime.timedelta(days=1)
     link = await Url.query.where(Url.redirect_url == shorturl).gino.first()
-    # link.visits = link.visits + 1
-    await link.update(visits=link.visits + 1).apply()
-    headers = {
-        'location': link.original_url,
-        'expires' : expiration.strftime('%a, %d %b %Y %H:%M:%S GMT')
-    }
-    
-    return web.Response(status=301, headers=headers)
+    if link: 
+        # link.visits = link.visits + 1
+        await link.update(visits=link.visits + 1).apply()
+        headers = {
+            'location': link.original_url,
+            'expires' : expiration.strftime('%a, %d %b %Y %H:%M:%S GMT')
+        }
+        
+        return web.Response(status=301, headers=headers)
+    else:
+        return web.Response(status=404)
