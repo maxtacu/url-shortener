@@ -41,5 +41,5 @@ variable "domain" {
   type = string
   default = "*.shortdemo.tk"
 
-  description = "Sphere root domain for staging and prod environment"
+  description = "Route53 domain"
 }
