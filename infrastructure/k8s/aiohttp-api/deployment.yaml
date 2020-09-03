@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aiohttp-api
+  labels:
+    app: aiohttp-api
+spec:
+  selector:
+    matchLabels:
+      app: aiohttp-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: aiohttp-api
+    spec:
+      containers:
+      - name: aiohttp-api
+        image: maxtacu/aiohttp-urlshortener:0.0.1
+        imagePullPolicy: Always
+        env:
+          # Use secret in real usage
+        - name: DATABASE_URL
+          value: "postgresql://postgres:password@postgres.postgres.svc.cluster.local:5432/urlshortener"
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aiohttp-api
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/maxtacu/url-shortener.git
+    targetRevision: HEAD
+    path: infrastructure/k8s/aiohttp-api
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: aiohttp-shortener
