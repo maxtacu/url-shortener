@@ -1,7 +1,5 @@
 import os 
 
-SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///shortener.db')
-SQLALCHEMY_TRACK_MODIFICATIONS = False
+DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://postgres:password@localhost:5432/urlshortener')
 
-HOSTNAME = 'http://localhost:8080/'
-SECRET_KEY = os.urandom(16)
+HOSTNAME = os.environ.get('SHORT_HOSTNAME', 'https://aiohttp.shortdemo.tk/')

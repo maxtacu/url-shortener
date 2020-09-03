@@ -1,8 +1,15 @@
-from api_server.extensions import db, ma
 from datetime import datetime, timedelta 
+from api_server.extensions import db
+from api_server.__main__ import loop
+from marshmallow import Schema, fields
+from api_server.config import HOSTNAME
 
 from random import choices
 import string
+import asyncio
+import nest_asyncio
+
+nest_asyncio.apply()
 
 
 class Url(db.Model):
@@ -13,26 +20,27 @@ class Url(db.Model):
     expires = db.Column(db.DateTime)
     visits = db.Column(db.Integer, default=0)
 
-    def __init__(self, **kwargs):
+    def __init__(self,  **kwargs):
         super().__init__(**kwargs)
-        self.redirect_url = self.generate_redirect_url()
-        self.expires = datetime.now() + timedelta(days=1)
+        self.redirect_url = loop.run_until_complete(self.generate_redirect_url())
+        self.expires = datetime.now() + timedelta(days=3)
 
     
-    def generate_redirect_url(self):
+    async def generate_redirect_url(self):
         characters = string.digits + string.ascii_letters # numbers + lower and upercase letters
         short_url = ''.join(choices(characters, k=7))
 
-        link = self.query.filter_by(redirect_url=short_url).first()
+        link = await self.query.where(self.redirect_url==short_url).gino.first()
 
         if link:
-            return self.generate_redirect_url()
+            return await self.generate_redirect_url()
                 
         return short_url
 
 
-class UrlSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Url
-        sqla_session = db.session  
-
+class UrlSchema(Schema):
+    id = fields.Int()
+    original_url = fields.Str()
+    redirect_url = fields.Function(lambda obj: HOSTNAME + obj.redirect_url)
+    expires = fields.DateTime()
+    visits = fields.Int(default=0)

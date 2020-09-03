@@ -9,6 +9,7 @@ Python 3.5.2+
 To run the server, please execute the following from the root directory:
 
 ```
+docker run --rm -d -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_DB=urlshortener postgres:10
 pip3 install -r requirements.txt
 python3 -m api_server
 ```
