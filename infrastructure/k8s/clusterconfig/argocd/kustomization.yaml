@@ -4,3 +4,7 @@ resources:
 - namespace.yaml
 - argocd.yaml
 - ingress.yaml
+
+images:
+- name: argoproj/argocd
+  newTag: v1.7.4
