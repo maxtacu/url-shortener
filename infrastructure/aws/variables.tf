@@ -39,7 +39,7 @@ variable "region" {
 
 variable "domain" {
   type = string
-  default = "*.shortdemo.tk"
+  default = "*.maxdoesdevops.tk"
 
   description = "Route53 domain"
 }

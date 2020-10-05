@@ -15,7 +15,7 @@ metadata:
     alb.ingress.kubernetes.io/security-groups: url-shortener-alb-sg # Security group for all ALBs
 spec:
   rules:
-    - host: flask.shortdemo.tk
+    - host: flask.masdoesdevops.tk
     - http:
         paths:
          - path: /*

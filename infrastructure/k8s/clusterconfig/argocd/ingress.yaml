@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/component: server
 spec:
   rules:
-    - host: argocd.shortdemo.tk
+    - host: argocd.maxdoesdevops.tk
     - http:
         paths:
          - path: /*
